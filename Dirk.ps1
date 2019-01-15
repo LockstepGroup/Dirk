@@ -31,11 +31,11 @@ try {
             $InputConfig = Get-CsConfiguration -Path $InputConfigPath -Verbose:$false
             if ($InputConfig.Global.Disable) {
                 log 1 "$LogPrefix input disabled, skipping..."
-                continue :inputs
+                continue inputs
             }
         } else {
             log 1 "$LogPrefix config file not found, skipping..."
-            continue :inputs
+            continue inputs
         }
 
         :device foreach ($device in $InputConfig.Device) {
@@ -46,7 +46,7 @@ try {
 
             if ($DeviceConfig.Disable) {
                 log 1 "$LogPrefix device disabled, skipping..."
-                continue :device
+                continue device
             } else {
                 log 1 "$LogPrefix starting device $($DeviceConfig.Hostname)"
             }
@@ -63,7 +63,7 @@ try {
                 $LogPrefix = "$LogPrefixInput $LogPrefixDevice`: $CheckId`:"
                 if ($CheckConfig.Disable) {
                     log 1 "$LogPrefix check disabled, skipping..."
-                    continue :check
+                    continue check
                 }
                 . $check.FullName
                 log 2 "$LogPrefix check complete"
@@ -78,7 +78,7 @@ try {
                 $OutputConfig = Get-CsConfiguration -Path $OutputConfigPath
                 if ($null -eq $OutputLookup) {
                     log 1 "$LogPrefix output not found: $OutputType, skipping..."
-                    continue :check
+                    continue check
                 } else {
                     $LogPrefix = $LogPrefix + ' ' + $OutputType + ':'
                 }
