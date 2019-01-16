@@ -5,9 +5,9 @@ $CheckAzureRm = Get-Module -Name AzureRM.Storage -ListAvailable
 if ($CheckAzureRm) {
     Set-Alias -Name New-AzStorageContext -Value New-AzureStorageContext
     Set-Alias -Name Set-AzStorageBlobContent -Value Set-AzureStorageBlobContent
-    Import-Module -Name AzureRm
+    Import-Module -Name AzureRm -Verbose:$false
 } elseif ($CheckAz) {
-    Import-Module -Name Az
+    Import-Module -Name Az -Verbose:$false
 } else {
     Throw "AzureRM or Az module not found."
 }
