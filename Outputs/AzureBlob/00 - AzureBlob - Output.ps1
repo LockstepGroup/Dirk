@@ -1,6 +1,16 @@
-#requires -module Az
+# Check for correct Azure Module and load it, "requires" statement didn't autoload modules in all environments
+$CheckAz = Get-Module -Name Az.Storage -ListAvailable
+$CheckAzureRm = Get-Module -Name AzureRM.Storage -ListAvailable
 
-#To push csv to Azure blob storage
+if ($CheckAzureRm) {
+    Set-Alias -Name New-AzStorageContext -Value New-AzureStorageContext
+    Set-Alias -Name Set-AzStorageBlobContent -Value Set-AzureStorageBlobContent
+    Import-Module -Name AzureRm
+} elseif ($CheckAz) {
+    Import-Module -Name Az
+} else {
+    Throw "AzureRM or Az module not found."
+}
 
 ############################################################################
 #Create parameters for the account name and account key
@@ -42,7 +52,7 @@ if ($env:TMP) {
 } else {
     $LocalDirectory = $env:TMPDIR
 }
-$LocalFileName = $in.Name + '-' + $checkid + '-' + (Get-Date -Format "yyyy-MM-dd.HH:mm:ss.fffff").ToString() + '.csv'
+$LocalFileName = $device.Hostname + '-' + $in.Name + '-' + $checkid + '-' + (Get-Date -Format "yyyy-MM-dd.HH.mm.ss.fffff").ToString() + '.csv'
 
 $LocalFile = Join-Path -Path $LocalDirectory -ChildPath $LocalFileName
 
