@@ -5,3 +5,7 @@ try {
 }
 
 $TableData = Get-BrokerSession -MaxRecordCount 1500 -AdminAddres $DeviceConfig.Hostname -Verbose:$false
+$TableData = $TableData | Select-Object `
+@{n = 'ApplicationsInUse'; e = {$_.ApplicationsInUse -join ','}}, `
+@{n = 'SmartAccessTags'; e = {$_.SmartAccessTags -join ','}}, `
+    * -ExcludeProperty ApplicationsInUse, SmartAccessTags
