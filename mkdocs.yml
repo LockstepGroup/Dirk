@@ -1,5 +1,5 @@
-site_name: Dirk
-repo_url: https://github.com/LockstepGroup/Dirk
+site_name: Todd
+repo_url: https://github.com/LockstepGroup/Todd
 theme: readthedocs
 pages:
   - Home: index.md

@@ -30,6 +30,3 @@ config.json*
 
 # Log Files
 *.log
-
-# Troubleshooting files
-*.xml
