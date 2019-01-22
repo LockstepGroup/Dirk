@@ -30,9 +30,9 @@ InModuleScope $ENV:BHProjectName {
         }
 
         Mock Get-GithubRepo { New-Item -Path (Join-Path -Path $TestPath -ChildPath 'Todd') -ItemType Directory } -Verifiable
-        #Mock New-Item { return $true } -Verifiable
+        Mock New-Item { return $true } -Verifiable
 
-        Install-Dirk -Path $TestPath
+        Install-Dirk -Path $TestPath -Force
 
         It "Should set env:DirkRoot" {
             $env:DirkRoot | Should -Be $TestPath

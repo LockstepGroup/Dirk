@@ -53,7 +53,7 @@ function Install-Dirk {
             'MacOS' {
                 Write-Verbose "$VerbosePrefix OS: MacOS: Adding `$env:DirkRoot to `$profile.AllUsersAllHosts"
                 if ($EnvIsSet) {
-                    $FullContent = (Get-Content `$profile.AllUsersAllHosts) -replace $EnvIsSetRx, $LineToAdd
+                    $FullContent = (Get-Content $profile.AllUsersAllHosts) -replace $EnvIsSetRx, $LineToAdd
                     Write-Output $FullContent | sudo tee $profile.AllUsersAllHosts > /dev/null
                 } else {
                     Write-Output $LineToAdd | sudo tee -a $profile.AllUsersAllHosts > /dev/null
