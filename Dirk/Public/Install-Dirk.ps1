@@ -7,7 +7,10 @@ function Install-Dirk {
         [Parameter(ParameterSetName = "Credential", Mandatory = $false)]
         [System.Management.Automation.PSCredential]
         [System.Management.Automation.Credential()]
-        $Credential = $global:GithubCredential
+        $Credential = $global:GithubCredential,
+
+        [Parameter(Mandatory = $false)]
+        [switch]$Force
     )
 
     BEGIN {
@@ -25,9 +28,20 @@ function Install-Dirk {
 
         $ResolvedPath = (Resolve-Path -Path $Path).Path
 
-
         ###########################################################################
         # Setup Enviroment Variable
+
+        # Check to see if environment variable is already set in $profile.AllUsersAllHosts
+        $EnvIsSet = $false
+        $EnvIsSetRx = '^\$env:DirkRoot\ ?=.+'
+        $EnvIsSet = (Get-Content $profile.AllUsersAllHosts) -match $EnvIsSetRx
+        if ($EnvIsSet -and !($Force)) {
+            try {
+                Throw
+            } catch {
+                $PSCmdlet.ThrowTerminatingError([HelperProcessError]::throwCustomError(1000, $profile.AllUsersAllHosts))
+            }
+        }
 
         # set for current environment
         Write-Verbose "$VerbosePrefix setting `$env:DirkRoot to $ResolvedPath"
@@ -38,11 +52,21 @@ function Install-Dirk {
         switch -Regex (Get-OsVersion) {
             'MacOS' {
                 Write-Verbose "$VerbosePrefix OS: MacOS: Adding `$env:DirkRoot to `$profile.AllUsersAllHosts"
-                Write-Output $LineToAdd | sudo tee -a $profile.AllUsersAllHosts > /dev/null
+                if ($EnvIsSet) {
+                    $FullContent = (Get-Content `$profile.AllUsersAllHosts) -replace $EnvIsSetRx, $LineToAdd
+                    Write-Output $FullContent | sudo tee $profile.AllUsersAllHosts > /dev/null
+                } else {
+                    Write-Output $LineToAdd | sudo tee -a $profile.AllUsersAllHosts > /dev/null
+                }
+
             }
             'Windows' {
                 Write-Verbose "$VerbosePrefix OS: Windows: Adding `$env:DirkRoot to `$profile.AllUsersAllHosts"
-                $Command = "Add-Content -Path `$profile.AllUsersAllHosts -Value '$LineToAdd'"
+                if ($EnvIsSet) {
+                    $Command = "(Get-Content `$profile.AllUsersAllHosts) -replace '$EnvIsSetRx','$LineToAdd' | Set-Content `$profile.AllUsersAllHosts"
+                } else {
+                    $Command = "Add-Content -Path `$profile.AllUsersAllHosts -Value '$LineToAdd'"
+                }
                 $Bytes = [System.Text.Encoding]::Unicode.GetBytes($Command)
                 $EncodedCommand = [Convert]::ToBase64String($Bytes)
                 Invoke-ElevatedProcess -Arguments "-EncodedCommand $encodedCommand" | Out-Null
