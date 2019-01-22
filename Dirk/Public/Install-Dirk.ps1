@@ -36,10 +36,12 @@ function Install-Dirk {
         $EnvIsSetRx = '^\$env:DirkRoot\ ?=.+'
         $EnvIsSet = (Get-Content $profile.AllUsersAllHosts) -match $EnvIsSetRx
         if ($EnvIsSet -and !($Force)) {
-            try {
-                Throw
-            } catch {
-                $PSCmdlet.ThrowTerminatingError([HelperProcessError]::throwCustomError(1000, $profile.AllUsersAllHosts))
+            if ($LineToAdd -ne $EnvIsSet) {
+                try {
+                    Throw
+                } catch {
+                    $PSCmdlet.ThrowTerminatingError([HelperProcessError]::throwCustomError(1000, $profile.AllUsersAllHosts))
+                }
             }
         }
 
