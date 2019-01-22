@@ -27,6 +27,7 @@ InModuleScope $ENV:BHProjectName {
     #$TestPath = Join-Path $env:TMPDIR -ChildPath "Dirk"
     Describe "Install-Dirk to Path: $TestPath" {
         $env:DirkRoot = $null
+        $profile.AllUsersAllHosts = 'c:\Projects\dirk\profile.ps1'
 
         $ToddPath = Join-Path -Path $TestPath -ChildPath 'Todd'
         if (Test-Path $ToddPath) {
