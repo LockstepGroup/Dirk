@@ -14,20 +14,19 @@ InModuleScope $ENV:BHProjectName {
         $Verbose.add("Verbose", $True)
     }
 
-    Describe "Install-Dirk" {
-
-        $env:DirkRoot = $null
-
-        switch -Regex (Get-OsVersion) {
-            'MacOS' {
-                Mock sudo { return $true } -Verifiable
-                $TestPath = Join-Path $env:TMPDIR -ChildPath "Dirk"
-            }
-            'Windows' {
-                Mock Invoke-ElevatedProcess { return $true } -Verifiable
-                $TestPath = Join-Path $env:TEMP -ChildPath "Dirk"
-            }
+    switch -Regex (Get-OsVersion) {
+        'MacOS' {
+            Mock sudo { return $true } -Verifiable
+            $TestPath = Join-Path $env:TMPDIR -ChildPath "Dirk"
         }
+        'Windows' {
+            Mock Invoke-ElevatedProcess { return $true } -Verifiable
+            $TestPath = Join-Path $env:TEMP -ChildPath "Dirk"
+        }
+    }
+    #$TestPath = Join-Path $env:TMPDIR -ChildPath "Dirk"
+    Describe "Install-Dirk to Path: $TestPath" {
+        $env:DirkRoot = $null
 
         $ToddPath = Join-Path -Path $TestPath -ChildPath 'Todd'
         if (Test-Path $ToddPath) {
