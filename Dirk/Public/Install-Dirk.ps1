@@ -16,15 +16,21 @@ function Install-Dirk {
 
     PROCESS {
 
+        if (Test-Path $Path) {
+            Write-Verbose "$VerbosePrefix Path exists: $Path"
+        } else {
+            Write-Verbose "$VerbosePrefix Path does not exist, creating: $Path"
+            New-Item -Path $Path -ItemType Directory | Out-Null
+        }
 
+        $ResolvedPath = (Resolve-Path -Path $Path).Path
 
-        Write-Verbose "$VerbosePrefix setting `$env:DirkRoot to $Path"
-        $ResolvedPath = Resolve-Path -Path $Path
 
         ###########################################################################
         # Setup Enviroment Variable
 
         # set for current environment
+        Write-Verbose "$VerbosePrefix setting `$env:DirkRoot to $ResolvedPath"
         $env:DirkRoot = $ResolvedPath
 
         # set permanently
@@ -47,7 +53,7 @@ function Install-Dirk {
         ###########################################################################
         # Download repo to desired path
 
-        New-Item -Path $ResolvedPath -ItemType Directory | Out-Null
+
         Get-GithubRepo -Owner 'LockstepGroup' -Repository 'Todd' -TargetPath $ResolvedPath -Credential $Credential
 
     }

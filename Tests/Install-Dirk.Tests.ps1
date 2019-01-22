@@ -29,8 +29,8 @@ InModuleScope $ENV:BHProjectName {
             }
         }
 
-        Mock Get-GithubRepo { return $true } -Verifiable
-        Mock New-Item { return $true } -Verifiable
+        Mock Get-GithubRepo { New-Item -Path (Join-Path -Path $TestPath -ChildPath 'Todd') -ItemType Directory } -Verifiable
+        #Mock New-Item { return $true } -Verifiable
 
         Install-Dirk -Path $TestPath
 
