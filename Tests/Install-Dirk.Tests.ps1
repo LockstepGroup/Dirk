@@ -29,8 +29,9 @@ InModuleScope $ENV:BHProjectName {
             }
         }
 
+        Remove-Item (Join-Path -Path $TestPath -ChildPath 'Todd') -Force
         Mock Get-GithubRepo { New-Item -Path (Join-Path -Path $TestPath -ChildPath 'Todd') -ItemType Directory } -Verifiable
-        Mock New-Item { return $true } -Verifiable
+        #Mock New-Item { return $true } -Verifiable
 
         Install-Dirk -Path $TestPath -Force
 
