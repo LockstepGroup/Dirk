@@ -15,15 +15,17 @@ InModuleScope $ENV:BHProjectName {
     }
 
     Describe "Install-Dirk" {
-        $TestPath = Join-Path $env:TMPDIR -ChildPath "Dirk"
+
         $env:DirkRoot = $null
 
         switch -Regex (Get-OsVersion) {
             'MacOS' {
                 Mock sudo { return $true } -Verifiable
+                $TestPath = Join-Path $env:TMPDIR -ChildPath "Dirk"
             }
             'Windows' {
                 Mock Invoke-ElevatedProcess { return $true } -Verifiable
+                $TestPath = Join-Path $env:TEMP -ChildPath "Dirk"
             }
         }
 
