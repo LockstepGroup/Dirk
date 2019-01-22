@@ -19,7 +19,7 @@ function Install-Dirk {
 
 
         Write-Verbose "$VerbosePrefix setting `$env:DirkRoot to $Path"
-        $ResolvedPath = $Path
+        $ResolvedPath = Resolve-Path -Path $Path
 
         ###########################################################################
         # Setup Enviroment Variable
@@ -28,12 +28,14 @@ function Install-Dirk {
         $env:DirkRoot = $ResolvedPath
 
         # set permanently
-        $LineToAdd = '$env:DirkRoot = "' + ($ResolvedPath) + '"' + "'"
+        $LineToAdd = '$env:DirkRoot = "' + ($ResolvedPath) + '"'
         switch -Regex (Get-OsVersion) {
             'MacOS' {
+                Write-Verbose "$VerbosePrefix OS: MacOS: Adding `$env:DirkRoot to `$profile.AllUsersAllHosts"
                 Write-Output $LineToAdd | sudo tee -a $profile.AllUsersAllHosts > /dev/null
             }
             'Windows' {
+                Write-Verbose "$VerbosePrefix OS: Windows: Adding `$env:DirkRoot to `$profile.AllUsersAllHosts"
                 $Command = "Add-Content -Path `$profile.AllUsersAllHosts -Value '$LineToAdd'"
                 $Bytes = [System.Text.Encoding]::Unicode.GetBytes($Command)
                 $EncodedCommand = [Convert]::ToBase64String($Bytes)
