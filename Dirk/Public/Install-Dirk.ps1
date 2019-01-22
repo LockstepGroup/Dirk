@@ -37,7 +37,7 @@ function Install-Dirk {
                 $Command = "Add-Content -Path `$profile.AllUsersAllHosts -Value '$LineToAdd'"
                 $Bytes = [System.Text.Encoding]::Unicode.GetBytes($Command)
                 $EncodedCommand = [Convert]::ToBase64String($Bytes)
-                Invoke-ElevatedProcess -Arguments "-EncodedCommand $encodedCommand"
+                Invoke-ElevatedProcess -Arguments "-EncodedCommand $encodedCommand" | Out-Null
             }
         }
 
@@ -45,7 +45,8 @@ function Install-Dirk {
         ###########################################################################
         # Download repo to desired path
 
-        Get-GithubRepo -Owner 'LockstepGroup' -Repository 'Todd' -TargetPath $Path -Credential $Credential
+        New-Item -Path $ResolvedPath -ItemType Directory | Out-Null
+        Get-GithubRepo -Owner 'LockstepGroup' -Repository 'Todd' -TargetPath $ResolvedPath -Credential $Credential
 
     }
 

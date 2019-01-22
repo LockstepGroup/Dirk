@@ -30,6 +30,7 @@ InModuleScope $ENV:BHProjectName {
         }
 
         Mock Get-GithubRepo { return $true } -Verifiable
+        Mock New-Item { return $true } -Verifiable
 
         Install-Dirk -Path $TestPath
 
