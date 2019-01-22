@@ -15,11 +15,26 @@ InModuleScope $ENV:BHProjectName {
     }
 
     Describe "Install-Dirk" {
-        Context "Non-Windows" {
-            Mock Get-Item { return @{Value = "macos"} } -ParameterFilter { $Path -eq 'env:os' }
-            It "Should throw on non-windows systems" {
-                { Get-Ninite -Apps 7zip } | Should -Throw
+        $TestPath = Join-Path $env:TMPDIR -ChildPath "Dirk"
+        $env:DirkRoot = $null
+
+        switch -Regex (Get-OsVersion) {
+            'MacOS' {
+                Mock sudo { return $true } -Verifiable
+            }
+            'Windows' {
+                Mock Invoke-ElevatedProcess { return $true } -Verifiable
             }
         }
+
+        Mock Get-GithubRepo { return $true } -Verifiable
+
+        Install-Dirk -Path $TestPath
+
+        It "Should set env:DirkRoot" {
+            $env:DirkRoot | Should -Be $TestPath
+        }
+
+        Assert-VerifiableMock
     }
 }
