@@ -30,7 +30,7 @@
     Copyright         = '(c) Lockstep Technology Group. All rights reserved.'
 
     # Description of the functionality provided by this module
-    # Description = ''
+    Description       = 'Module used for Analytics Gathering'
 
     # Minimum version of the PowerShell engine required by this module
     # PowerShellVersion = ''
