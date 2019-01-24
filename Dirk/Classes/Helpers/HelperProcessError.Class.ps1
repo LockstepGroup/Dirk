@@ -20,6 +20,7 @@ class HelperProcessError {
     # The Types and Categories here are generic because I have no idea what subset exist in both core and non-core.
     static [hashtable] $ExceptionDefinitions = @{
         1000 = [HelperProcessError]::newExceptionDefinition('System.ArgumentException', [System.Management.Automation.ErrorCategory]::CloseError, '$env:DirkRoot already exists in $profile.AllUsersAllHosts. Use -Force to overwrite.')
+        1001 = [HelperProcessError]::newExceptionDefinition('System.ArgumentException', [System.Management.Automation.ErrorCategory]::CloseError, '$env:DirkRoot does not exist, please set to a valid directory.')
     }
 
     # Constructor
