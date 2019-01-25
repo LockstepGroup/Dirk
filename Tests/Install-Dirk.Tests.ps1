@@ -73,6 +73,7 @@ InModuleScope $ENV:BHProjectName {
         }
         'Windows' {
             Mock Invoke-ElevatedProcess { return $true } -Verifiable
+            Mock Register-ScheduledTask { return $true } -Verifiable
             $TestPath = Join-Path $env:TEMP -ChildPath "Dirk"
         }
     }
