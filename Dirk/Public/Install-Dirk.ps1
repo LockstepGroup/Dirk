@@ -4,10 +4,15 @@ function Install-Dirk {
         [Parameter(Mandatory = $false, Position = 0)]
         [string]$Path = 'c:\Lockstep',
 
-        [Parameter(ParameterSetName = "Credential", Mandatory = $false)]
+        [Parameter(Mandatory = $false)]
         [System.Management.Automation.PSCredential]
         [System.Management.Automation.Credential()]
-        $Credential = $global:GithubCredential,
+        $GithubCredential = $global:GithubCredential,
+
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.PSCredential]
+        [System.Management.Automation.Credential()]
+        $ScheduledTaskCredential,
 
         [Parameter(Mandatory = $false)]
         [switch]$Force
@@ -18,6 +23,13 @@ function Install-Dirk {
     }
 
     PROCESS {
+        if ($null -eq $GithubCredential) {
+            try {
+                Throw
+            } catch {
+                $PSCmdlet.ThrowTerminatingError([HelperProcessError]::throwCustomError(1002, "GithubCredential"))
+            }
+        }
 
         if (Test-Path $Path) {
             Write-Verbose "$VerbosePrefix Path exists: $Path"
@@ -81,10 +93,32 @@ function Install-Dirk {
 
         ###########################################################################
         # Download repo to desired path
+        Get-GithubRepo -Owner 'LockstepGroup' -Repository 'Todd' -TargetPath $ResolvedPath -Credential $GithubCredential
 
+        ###########################################################################
+        # Setup Scheduled Task
+        # TODO: make this compatible for cron?
+        $ActionParams = @{}
+        $ActionParams.Execute = 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+        $ActionParams.Argument = '-ExecutionPolicy Bypass -Command "& ' + (Join-Path -Path $env:DirkRoot -ChildPath "Todd.ps1") + ' -Verbosity 2"'
+        $Action = New-ScheduledTaskAction @ActionParams
 
-        Get-GithubRepo -Owner 'LockstepGroup' -Repository 'Todd' -TargetPath $ResolvedPath -Credential $Credential
+        $TriggerParams = @{}
+        $TriggerParams.Daily = $true
+        $TriggerParams.At = '1am'
+        $Trigger = New-ScheduledTaskTrigger @TriggerParams
 
+        $TaskParams = @{}
+        $TaskParams.Action = $Action
+        $TaskParams.Trigger = $Trigger
+        $Task = New-ScheduledTask @TaskParams
+
+        $RegisterParams = @{}
+        $RegisterParams.TaskName = 'LtgReport'
+        $RegisterParams.InputObject = $Task
+        $RegisterParams.User = $ScheduledTaskCredential.UserName
+        $RegisterParams.Password = $ScheduledTaskCredential.GetNetworkCredential().Password
+        Register-ScheduledTask @RegisterParams
     }
 
     END {
