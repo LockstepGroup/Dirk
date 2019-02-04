@@ -56,7 +56,7 @@ InModuleScope $ENV:BHProjectName {
 
     switch -Regex (Get-OsVersion) {
         'MacOS' {
-            Mock sudo { return $true } -Verifiable
+            Mock sudo { return $true }
 
             #############################################################
             # Dummy fuctions for scheduled tasks, these have to be defined somewhere for Mock to work
