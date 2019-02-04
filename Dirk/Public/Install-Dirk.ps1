@@ -39,6 +39,7 @@ function Install-Dirk {
         # Setup Enviroment Variable
 
         # Check to see if environment variable is already set in $profile.AllUsersAllHosts
+        $LineToAdd = '$env:DirkRoot = "' + ($ResolvedPath) + '"'
         $EnvIsSet = $false
         $EnvIsSetRx = '^\$env:DirkRoot\ ?=.+'
         $EnvIsSet = Select-String -Pattern $EnvIsSetRx -Path $profile.AllUsersAllHosts
@@ -57,7 +58,6 @@ function Install-Dirk {
         $env:DirkRoot = $ResolvedPath
 
         # set permanently
-        $LineToAdd = '$env:DirkRoot = "' + ($ResolvedPath) + '"'
         if ($LineToAdd -ne $EnvIsSet) {
             # only update $profile.AllUsersAllHosts if $env:DirkRoot is not already correct
             switch -Regex (Get-OsVersion) {
