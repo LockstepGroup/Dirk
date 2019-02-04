@@ -13,7 +13,7 @@ Downloads Dirk scripts repo (Todd) and sets env:DirkRoot
 ## SYNTAX
 
 ```
-Install-Dirk [-Path] <String> [-Credential <PSCredential>] [<CommonParameters>]
+Install-Dirk [[-Path] <String>] [-GithubCredential <PSCredential>] [-Force] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,8 +44,38 @@ Uses $global:GithubCredential, downloads Todd Repo to 'c:\lockstep', sets $env:D
 
 ## PARAMETERS
 
-### -Credential
-Credentials for Github to download private Dirk repository (Todd)
+### -Path
+Desired local path for Dirk script repository (Todd)
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+{{Fill Force Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -GithubCredential
+{{Fill GithubCredential Description}}
 
 ```yaml
 Type: PSCredential
@@ -59,24 +89,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Path
-Desired local path for Dirk script repository (Todd)
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
-For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
