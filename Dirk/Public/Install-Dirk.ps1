@@ -9,11 +9,6 @@ function Install-Dirk {
         [System.Management.Automation.Credential()]
         $GithubCredential = $global:GithubCredential,
 
-        [Parameter(Mandatory = $true)]
-        [System.Management.Automation.PSCredential]
-        [System.Management.Automation.Credential()]
-        $ScheduledTaskCredential,
-
         [Parameter(Mandatory = $false)]
         [switch]$Force
     )
@@ -94,31 +89,6 @@ function Install-Dirk {
         ###########################################################################
         # Download repo to desired path
         Get-GithubRepo -Owner 'LockstepGroup' -Repository 'Todd' -TargetPath $ResolvedPath -Credential $GithubCredential
-
-        ###########################################################################
-        # Setup Scheduled Task
-        # TODO: make this compatible for cron?
-        $ActionParams = @{}
-        $ActionParams.Execute = 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
-        $ActionParams.Argument = '-ExecutionPolicy Bypass -Command "& ' + (Join-Path -Path $env:DirkRoot -ChildPath "Todd.ps1") + ' -Verbosity 2"'
-        $Action = New-ScheduledTaskAction @ActionParams
-
-        $TriggerParams = @{}
-        $TriggerParams.Daily = $true
-        $TriggerParams.At = '1am'
-        $Trigger = New-ScheduledTaskTrigger @TriggerParams
-
-        $TaskParams = @{}
-        $TaskParams.Action = $Action
-        $TaskParams.Trigger = $Trigger
-        $Task = New-ScheduledTask @TaskParams
-
-        $RegisterParams = @{}
-        $RegisterParams.TaskName = 'LtgReport'
-        $RegisterParams.InputObject = $Task
-        $RegisterParams.User = $ScheduledTaskCredential.UserName
-        $RegisterParams.Password = $ScheduledTaskCredential.GetNetworkCredential().Password
-        Register-ScheduledTask @RegisterParams
     }
 
     END {
