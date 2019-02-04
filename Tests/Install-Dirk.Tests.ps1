@@ -65,15 +65,10 @@ InModuleScope $ENV:BHProjectName {
             function New-ScheduledTask () {}
             function Register-ScheduledTask () {}
             # Mocks for scheduled tasks that don't exist in MacOS
-            Mock New-ScheduledTaskAction { return $true } -Verifiable
-            Mock New-ScheduledTaskTrigger { return $true } -Verifiable
-            Mock New-ScheduledTask { return $true } -Verifiable
-            Mock Register-ScheduledTask { return $true } -Verifiable
             $TestPath = Join-Path $env:TMPDIR -ChildPath "Dirk"
         }
         'Windows' {
             Mock Invoke-ElevatedProcess { return $true } -Verifiable
-            Mock Register-ScheduledTask { return $true } -Verifiable
             $TestPath = Join-Path $env:TEMP -ChildPath "Dirk"
         }
     }
@@ -89,7 +84,7 @@ InModuleScope $ENV:BHProjectName {
         Mock Get-GithubRepo { New-Item -Path (Join-Path -Path $TestPath -ChildPath 'Todd') -ItemType Directory } -Verifiable
         Mock Get-Content { return @('$env:DirkRoot = "c:\lockstep"') } -Verifiable
 
-        Install-Dirk -Path $TestPath -Force -GithubCredential $TestCredential -ScheduledTaskCredential $TestCredential
+        Install-Dirk -Path $TestPath -Force -GithubCredential $TestCredential
 
         It "Should set env:DirkRoot" {
             $env:DirkRoot | Should -Be $TestPath
