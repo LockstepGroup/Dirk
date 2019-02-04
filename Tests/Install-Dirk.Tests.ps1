@@ -83,6 +83,7 @@ InModuleScope $ENV:BHProjectName {
         }
         Mock Get-GithubRepo { New-Item -Path (Join-Path -Path $TestPath -ChildPath 'Todd') -ItemType Directory } -Verifiable
         Mock Get-Content { return @('$env:DirkRoot = "c:\lockstep"') } -Verifiable
+        Mock Select-String { return @{Line = '$env:DirkRoot = "c:\lockstep"'} } -Verifiable
 
         Install-Dirk -Path $TestPath -Force -GithubCredential $TestCredential
 

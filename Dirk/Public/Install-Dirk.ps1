@@ -41,9 +41,9 @@ function Install-Dirk {
         # Check to see if environment variable is already set in $profile.AllUsersAllHosts
         $EnvIsSet = $false
         $EnvIsSetRx = '^\$env:DirkRoot\ ?=.+'
-        $EnvIsSet = (Get-Content $profile.AllUsersAllHosts) -match $EnvIsSetRx
+        $EnvIsSet = Select-String -Pattern $EnvIsSetRx -Path $profile.AllUsersAllHosts
         if ($EnvIsSet -and !($Force)) {
-            if ($LineToAdd -ne $EnvIsSet) {
+            if ($LineToAdd -ne $EnvIsSet.Line) {
                 try {
                     Throw
                 } catch {
