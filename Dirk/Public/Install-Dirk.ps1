@@ -10,7 +10,10 @@ function Install-Dirk {
         $GithubCredential = $global:GithubCredential,
 
         [Parameter(Mandatory = $false)]
-        [switch]$Force
+        [switch]$Force,
+
+        [Parameter(Mandatory = $false)]
+        [string]$Branch = 'master'
     )
 
     BEGIN {
@@ -88,7 +91,7 @@ function Install-Dirk {
 
         ###########################################################################
         # Download repo to desired path
-        Get-GithubRepo -Owner 'LockstepGroup' -Repository 'Todd' -TargetPath $ResolvedPath -Credential $GithubCredential
+        Get-GithubRepo -Owner 'LockstepGroup' -Repository 'Todd' -TargetPath $ResolvedPath -Credential $GithubCredential -Branch $Branch
     }
 
     END {

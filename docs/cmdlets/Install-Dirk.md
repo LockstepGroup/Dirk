@@ -13,7 +13,8 @@ Downloads Dirk scripts repo (Todd) and sets env:DirkRoot
 ## SYNTAX
 
 ```
-Install-Dirk [[-Path] <String>] [-GithubCredential <PSCredential>] [-Force] [<CommonParameters>]
+Install-Dirk [[-Path] <String>] [-GithubCredential <PSCredential>] [-Force] [-Branch <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -79,6 +80,21 @@ Accept wildcard characters: False
 
 ```yaml
 Type: PSCredential
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Branch
+{{Fill Branch Description}}
+
+```yaml
+Type: String
 Parameter Sets: (All)
 Aliases:
 
