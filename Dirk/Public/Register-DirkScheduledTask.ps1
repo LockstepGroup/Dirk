@@ -78,6 +78,7 @@ function Register-DirkScheduledTask {
         $RegisterParams = @{}
         $RegisterParams.TaskName = 'Dirk'
         if ($JobName) {
+            # did this so that we can create multiple tasks with different schedules
             $RegisterParams.TaskName += ' - ' + $JobName
         }
         $RegisterParams.InputObject = $Task
