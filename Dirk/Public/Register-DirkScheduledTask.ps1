@@ -77,6 +77,9 @@ function Register-DirkScheduledTask {
 
         $RegisterParams = @{}
         $RegisterParams.TaskName = 'Dirk'
+        if ($JobName) {
+            $RegisterParams.TaskName += ' - ' + $JobName
+        }
         $RegisterParams.InputObject = $Task
         $RegisterParams.User = $ScheduledTaskCredential.UserName
         $RegisterParams.Password = $ScheduledTaskCredential.GetNetworkCredential().Password
