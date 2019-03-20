@@ -84,6 +84,7 @@ function Register-DirkScheduledTask {
         $RegisterParams.InputObject = $Task
         $RegisterParams.User = $ScheduledTaskCredential.UserName
         $RegisterParams.Password = $ScheduledTaskCredential.GetNetworkCredential().Password
+        $RegisterParams.TaskPath = 'Lockstep'
         Register-ScheduledTask @RegisterParams
     }
 
