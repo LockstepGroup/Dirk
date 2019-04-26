@@ -62,7 +62,7 @@ function Register-DirkScheduledTask {
             '5min' {
                 $TriggerParams.Once = $true
                 $TriggerParams.RepetitionInterval = New-TimeSpan -Minutes 5
-                $TriggerParams.RepetitionDuration = ([System.TimeSpan]::MaxValue)
+                #$TriggerParams.RepetitionDuration = ([System.TimeSpan]::MaxValue)
                 $CurrentDateTime = Get-Date
                 $TriggerParams.At = $CurrentDateTime.AddMinutes( - ($CurrentDateTime.Minute % 5) + 5).AddSeconds( - ($CurrentDateTime.Second % 60))
             }
