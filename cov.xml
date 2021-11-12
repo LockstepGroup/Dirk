@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE report PUBLIC "-//JACOCO//DTD Report 1.1//EN" "report.dtd"[]>
-<report name="Pester (11/12/2021 10:50:59)">
-  <sessioninfo id="this" start="1636714258891" dump="1636714259080" />
+<report name="Pester (11/12/2021 13:32:06)">
+  <sessioninfo id="this" start="1636723926776" dump="1636723926928" />
   <package name="Dirk/Classes/Helpers">
     <class name="Dirk/Classes/Helpers/HelperProcessError.Class" sourcefilename="Classes/Helpers/HelperProcessError.Class.ps1">
       <method name="newExceptionDefinition" desc="()" line="3">
@@ -124,12 +124,12 @@
     </class>
     <class name="Dirk/Public/Test-DirkJobName" sourcefilename="Public/Test-DirkJobName.ps1">
       <method name="Test-DirkJobName" desc="()" line="12">
-        <counter type="INSTRUCTION" missed="7" covered="0" />
-        <counter type="LINE" missed="7" covered="0" />
+        <counter type="INSTRUCTION" missed="9" covered="0" />
+        <counter type="LINE" missed="9" covered="0" />
         <counter type="METHOD" missed="1" covered="0" />
       </method>
-      <counter type="INSTRUCTION" missed="7" covered="0" />
-      <counter type="LINE" missed="7" covered="0" />
+      <counter type="INSTRUCTION" missed="9" covered="0" />
+      <counter type="LINE" missed="9" covered="0" />
       <counter type="METHOD" missed="1" covered="0" />
       <counter type="CLASS" missed="1" covered="0" />
     </class>
@@ -320,20 +320,22 @@
       <line nr="17" mi="1" ci="0" mb="0" cb="0" />
       <line nr="18" mi="1" ci="0" mb="0" cb="0" />
       <line nr="19" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="21" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="26" mi="1" ci="0" mb="0" cb="0" />
-      <counter type="INSTRUCTION" missed="7" covered="0" />
-      <counter type="LINE" missed="7" covered="0" />
+      <line nr="20" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="22" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="25" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="30" mi="1" ci="0" mb="0" cb="0" />
+      <counter type="INSTRUCTION" missed="9" covered="0" />
+      <counter type="LINE" missed="9" covered="0" />
       <counter type="METHOD" missed="1" covered="0" />
       <counter type="CLASS" missed="1" covered="0" />
     </sourcefile>
-    <counter type="INSTRUCTION" missed="167" covered="0" />
-    <counter type="LINE" missed="146" covered="0" />
+    <counter type="INSTRUCTION" missed="169" covered="0" />
+    <counter type="LINE" missed="148" covered="0" />
     <counter type="METHOD" missed="8" covered="0" />
     <counter type="CLASS" missed="8" covered="0" />
   </package>
-  <counter type="INSTRUCTION" missed="176" covered="0" />
-  <counter type="LINE" missed="155" covered="0" />
+  <counter type="INSTRUCTION" missed="178" covered="0" />
+  <counter type="LINE" missed="157" covered="0" />
   <counter type="METHOD" missed="11" covered="0" />
   <counter type="CLASS" missed="9" covered="0" />
 </report>

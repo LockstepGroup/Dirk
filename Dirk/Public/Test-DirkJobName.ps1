@@ -5,7 +5,7 @@ function Test-DirkJobName {
         [string]$ToddJobName,
 
         [Parameter(Mandatory = $true, Position = 1)]
-        [string]$ConfigJobName
+        [hashtable]$Config
     )
 
     BEGIN {
@@ -13,10 +13,14 @@ function Test-DirkJobName {
     }
 
     PROCESS {
-        if ($ConfigJobName -eq 'all') {
-            $ReturnObject = $true
-        } elseif ($ToddJobName -match $ConfigJobName) {
-            $ReturnObject = $true
+        if ($Config.JobName) {
+            if ($Config.JobName -eq 'all') {
+                $ReturnObject = $true
+            } elseif ($ToddJobName -match $Config.JobName) {
+                $ReturnObject = $true
+            } else {
+                $ReturnObject = $false
+            }
         } else {
             $ReturnObject = $false
         }
