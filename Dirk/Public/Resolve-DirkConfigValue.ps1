@@ -24,12 +24,10 @@ function Resolve-DirkConfigValue {
     PROCESS {
         if ($CheckConfig.$Setting) {
             $ResolvedValue = $CheckConfig.$Setting
-        } elseif ($InputConfig.Global.$Setting) {
-            $ResolvedValue = $InputConfig.Global.$Setting
         } elseif ($DeviceConfig.$Setting) {
             $ResolvedValue = $DeviceConfig.$Setting
-        } elseif ($CheckConfig.$Setting) {
-            $ResolvedValue = $CheckConfig.$Setting
+        } elseif ($InputConfig.Global.$Setting) {
+            $ResolvedValue = $InputConfig.Global.$Setting
         }
     }
 

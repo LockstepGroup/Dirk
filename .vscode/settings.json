@@ -9,5 +9,6 @@
   "editor.formatOnSave": true,
 
   // Controls whether the editor should automatically format the line after typing.
-  "editor.formatOnType": true
+"editor.formatOnType": true,
+"workbench.colorCustomizations": {}
 }
